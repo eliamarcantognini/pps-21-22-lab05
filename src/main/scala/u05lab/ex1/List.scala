@@ -17,9 +17,7 @@ enum List[A]:
     case h :: t => Some(t)
     case _ => None
 
-  def append(list: List[A]): List[A] = this match
-    case h :: t => h :: t.append(list)
-    case _ => list
+  def append(list: List[A]): List[A] = foldRight(list)(_ :: _)
 
   def foreach(consumer: A => Unit): Unit = this match
     case h :: t => consumer(h); t.foreach(consumer)
@@ -58,8 +56,17 @@ enum List[A]:
 
   def reverse(): List[A] = foldLeft[List[A]](Nil())((l, e) => e :: l)
 
+  def allMatch(p: A => Boolean): Boolean = ???
+
+  def allPositive(l: List[Int]): Boolean = l.allMatch(_ > 0)
+
   /** EXERCISES */
-  def zipRight: List[(A, Int)] = ???
+  def zipRight: List[(A, Int)] =
+    def _zip(acc: Int, l: List[A]): List[(A, Int)] = l match
+      case h :: t => (h, acc) :: _zip(acc+1, t)
+      case _ => List.Nil()
+    _zip(0, this)
+
 
   def partition(pred: A => Boolean): (List[A], List[A]) = ???
 
