@@ -70,7 +70,13 @@ enum List[A]:
 
   def partition(pred: A => Boolean): (List[A], List[A]) = (this.filter(pred), this.filter(!pred(_)))
 
-  def span(pred: A => Boolean): (List[A], List[A]) = ()
+  def span(pred: A => Boolean): (List[A], List[A]) =
+    this.foldLeft(((Nil[A](), Nil[A]()), true))((b,a) =>
+      if b._2 && pred(a) then
+        ((b._1._1 append a :: Nil(), Nil()), true)
+      else
+        ((b._1._1, b._1._2 append a :: Nil()), false)
+    )._1
 
   /** @throws UnsupportedOperationException if the list is empty */
   def reduce(op: (A, A) => A): A = ???
@@ -90,8 +96,6 @@ object List:
 
 @main def checkBehaviour(): Unit =
   val reference = List(1, 2, 3, 4)
-  println(reference.span(_ % 2 != 0)) // (List(1), List(2, 3, 4))
-  println(reference.span(_ < 3)) // (List(1, 2), List(3, 4))
 //  println(reference.reduce(_ + _)) // 10
 //  try Nil.reduce[Int](_ + _)
 //  catch case ex: Exception => println(ex) // prints exception

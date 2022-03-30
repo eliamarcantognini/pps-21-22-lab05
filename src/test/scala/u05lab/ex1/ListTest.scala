@@ -15,4 +15,9 @@ class ListTest {
   def testPartition(): Unit =
     assertEquals(l.partition(_ % 2 == 0), (List(2, 4), List(1, 3)))
 
+  @Test
+  def testSpan(): Unit =
+    assertEquals(l.span(_ % 2 != 0), (List(1), List(2, 3, 4)))
+    assertEquals(l.span(_ < 3), (List(1, 2), List(3, 4)))
+
 }
