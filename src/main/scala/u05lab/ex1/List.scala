@@ -94,6 +94,8 @@ object List:
   def of[A](elem: A, n: Int): List[A] =
     if n == 0 then Nil() else elem :: of(elem, n - 1)
 
+  def allPositive(l: List[Int]): Boolean = l allMatch(_>0)
+
 @main def checkBehaviour(): Unit =
   val reference = List(1, 2, 3, 4)
 //  println(reference.reduce(_ + _)) // 10
