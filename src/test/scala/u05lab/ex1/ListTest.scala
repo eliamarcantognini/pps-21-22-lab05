@@ -24,4 +24,8 @@ class ListTest {
   def testReduce(): Unit =
     assertEquals(l.reduce(_ + _), 10)
     assertThrows(classOf[UnsupportedOperationException], () => Nil.reduce((a,b) => a))
+
+  @Test
+  def testTakeRight(): Unit =
+    assertEquals(l.takeRight(3), List(2, 3, 4))
 }

@@ -83,7 +83,8 @@ enum List[A]:
     case h :: t => t.foldLeft(h)(op)
     case _ => throw UnsupportedOperationException()
 
-  def takeRight(n: Int): List[A] = ???
+  def takeRight(n: Int): List[A] =
+    this.zipRight.foldRight(Nil())((a, b) => if a._2 > this.length - 1 - n then a._1 :: b else b)
 
 // Factories
 object List:
@@ -97,11 +98,3 @@ object List:
     if n == 0 then Nil() else elem :: of(elem, n - 1)
 
   def allPositive(l: List[Int]): Boolean = l allMatch(_>0)
-
-@main def checkBehaviour(): Unit =
-  val reference = List(1, 2, 3, 4)
-  println(reference.reduce(_ + _)) // 10
-//  try Nil.reduce[Int](_ + _)
-//  catch case ex: Exception => println(ex) // prints exception
-//  println(List(10).reduce(_ + _)) // 10
-//  println(reference.takeRight(3)) // List(2, 3, 4)
