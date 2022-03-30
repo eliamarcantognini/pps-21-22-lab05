@@ -79,7 +79,9 @@ enum List[A]:
     )._1
 
   /** @throws UnsupportedOperationException if the list is empty */
-  def reduce(op: (A, A) => A): A = ???
+  def reduce(op: (A, A) => A): A = this match
+    case h :: t => t.foldLeft(h)(op)
+    case _ => throw UnsupportedOperationException()
 
   def takeRight(n: Int): List[A] = ???
 
@@ -98,7 +100,7 @@ object List:
 
 @main def checkBehaviour(): Unit =
   val reference = List(1, 2, 3, 4)
-//  println(reference.reduce(_ + _)) // 10
+  println(reference.reduce(_ + _)) // 10
 //  try Nil.reduce[Int](_ + _)
 //  catch case ex: Exception => println(ex) // prints exception
 //  println(List(10).reduce(_ + _)) // 10

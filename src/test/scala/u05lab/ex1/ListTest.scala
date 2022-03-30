@@ -1,6 +1,6 @@
 package u05lab.ex1
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.{assertEquals, assertThrows}
 import org.junit.Test
 
 class ListTest {
@@ -20,4 +20,8 @@ class ListTest {
     assertEquals(l.span(_ % 2 != 0), (List(1), List(2, 3, 4)))
     assertEquals(l.span(_ < 3), (List(1, 2), List(3, 4)))
 
+  @Test
+  def testReduce(): Unit =
+    assertEquals(l.reduce(_ + _), 10)
+    assertThrows(classOf[UnsupportedOperationException], () => Nil.reduce((a,b) => a))
 }
