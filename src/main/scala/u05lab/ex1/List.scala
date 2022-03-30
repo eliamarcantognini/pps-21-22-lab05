@@ -56,10 +56,6 @@ enum List[A]:
 
   def reverse(): List[A] = foldLeft[List[A]](Nil())((l, e) => e :: l)
 
-  def allMatch(p: A => Boolean): Boolean = ???
-
-  def allPositive(l: List[Int]): Boolean = l.allMatch(_ > 0)
-
   /** EXERCISES */
   def zipRight: List[(A, Int)] =
     def _zip(acc: Int, l: List[A]): List[(A, Int)] = l match
@@ -68,7 +64,7 @@ enum List[A]:
     _zip(0, this)
 
 
-  def partition(pred: A => Boolean): (List[A], List[A]) = ???
+  def partition(pred: A => Boolean): (List[A], List[A]) = (this.filter(pred), this.filter(!pred(_)))
 
   def span(pred: A => Boolean): (List[A], List[A]) = ???
 
@@ -91,10 +87,10 @@ object List:
 @main def checkBehaviour(): Unit =
   val reference = List(1, 2, 3, 4)
   println(reference.partition(_ % 2 == 0)) // (List(2, 4), List(1, 3))
-  println(reference.span(_ % 2 != 0)) // (List(1), List(2, 3, 4))
-  println(reference.span(_ < 3)) // (List(1, 2), List(3, 4))
-  println(reference.reduce(_ + _)) // 10
-  try Nil.reduce[Int](_ + _)
-  catch case ex: Exception => println(ex) // prints exception
-  println(List(10).reduce(_ + _)) // 10
-  println(reference.takeRight(3)) // List(2, 3, 4)
+//  println(reference.span(_ % 2 != 0)) // (List(1), List(2, 3, 4))
+//  println(reference.span(_ < 3)) // (List(1, 2), List(3, 4))
+//  println(reference.reduce(_ + _)) // 10
+//  try Nil.reduce[Int](_ + _)
+//  catch case ex: Exception => println(ex) // prints exception
+//  println(List(10).reduce(_ + _)) // 10
+//  println(reference.takeRight(3)) // List(2, 3, 4)

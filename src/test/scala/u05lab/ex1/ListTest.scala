@@ -11,4 +11,8 @@ class ListTest {
   def testZipRight(): Unit =
     assertEquals(l.zipRight, List((1, 0), (2, 1), (3, 2), (4, 3)))
 
+  @Test
+  def testPartition(): Unit =
+    assertEquals(l.partition(_ % 2 == 0), (List(2, 4), List(1, 3)))
+
 }
