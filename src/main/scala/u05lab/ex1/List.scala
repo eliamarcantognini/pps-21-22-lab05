@@ -54,6 +54,11 @@ enum List[A]:
     case Nil() => true
     case _ => false
 
+  def allMatch(pred: A => Boolean): Boolean = this match
+    case Nil() => true
+    case h :: t if pred(h) => t allMatch pred
+    case _ => false
+
   def reverse(): List[A] = foldLeft[List[A]](Nil())((l, e) => e :: l)
 
   /** EXERCISES */
@@ -63,10 +68,9 @@ enum List[A]:
       case _ => List.Nil()
     _zip(0, this)
 
-
   def partition(pred: A => Boolean): (List[A], List[A]) = (this.filter(pred), this.filter(!pred(_)))
 
-  def span(pred: A => Boolean): (List[A], List[A]) = ???
+  def span(pred: A => Boolean): (List[A], List[A]) = ()
 
   /** @throws UnsupportedOperationException if the list is empty */
   def reduce(op: (A, A) => A): A = ???
@@ -86,9 +90,8 @@ object List:
 
 @main def checkBehaviour(): Unit =
   val reference = List(1, 2, 3, 4)
-  println(reference.partition(_ % 2 == 0)) // (List(2, 4), List(1, 3))
-//  println(reference.span(_ % 2 != 0)) // (List(1), List(2, 3, 4))
-//  println(reference.span(_ < 3)) // (List(1, 2), List(3, 4))
+  println(reference.span(_ % 2 != 0)) // (List(1), List(2, 3, 4))
+  println(reference.span(_ < 3)) // (List(1, 2), List(3, 4))
 //  println(reference.reduce(_ + _)) // 10
 //  try Nil.reduce[Int](_ + _)
 //  catch case ex: Exception => println(ex) // prints exception
